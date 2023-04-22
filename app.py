@@ -16,6 +16,14 @@ connect_db(app)
 # RESTFUL TODOS JSON API
 # *****************************
 
+
+@app.route('/')
+def home():
+
+    cupcakes = Cupcake.query.all()
+    return render_template('home.html', cupcakes=cupcakes)
+
+
 @app.route('/api/cupcakes')
 def all_cupcakes():
 
@@ -58,7 +66,7 @@ def upadate_cupcake(id):
 
 @app.route('/api/cupcakes/<int:id>', methods=["PATCH"])
 def delete_cupcake(id):
-    """Updates a particular todo and responds w/ JSON of that updated todo"""
+    """DELETE a particular todo and responds w/ JSON of that updated todo"""
     cupcake = Cupcake.query.get_or_404(id)
     db.session.delete(cupcake)
     db.session.commit()
